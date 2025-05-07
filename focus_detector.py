@@ -4,9 +4,16 @@ import time
 import numpy as np
 import mediapipe as mp
 from plyer import notification
-import pyttsx3
 
-engine = pyttsx3.init()
+try:
+    import pyttsx3
+    engine = pyttsx3.init()
+    def speak_alert(text):
+        engine.say(text)
+        engine.runAndWait()
+except Exception as e:
+    def speak_alert(text):
+        print(f"[speak_alert] {text}")
 
 # MediaPipe Face Mesh
 mp_face_mesh = mp.solutions.face_mesh
@@ -33,10 +40,6 @@ mobile_start_time = None
 no_face_start = None
 focus_start = None
 break_start = None
-
-def speak_alert(text):
-    engine.say(text)
-    engine.runAndWait()
 
 
 def check_mobile_usage(frame):
